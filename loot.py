@@ -32,23 +32,30 @@ def parse():
             else:
                 result[name][2] += 1
 
-    data = []
-    label = []
+    bis = []
+    upg = []
+    labels = []
     color = []
     for player in result.keys():
-        data.append(result[player][1])
-        data.append(result[player][2])
-        label.append(player + " Bis")
-        label.append(player + " Upg")
-        color.append(colors[result[player][0]])
+        bis.append(result[player][1])
+        upg.append(result[player][2])
+        labels.append(player)
         color.append(colors[result[player][0]])
 
-    x_pos = np.arange(len(label))
-    plt.rcParams['figure.figsize'] = [20, 10]
-    plt.rcParams['font.size'] = '16'
-    plt.bar(x_pos, data, color = color, edgecolor = 'black')
-    plt.xticks(x_pos, label, rotation='vertical')
-    plt.tight_layout()
+    x_pos = np.arange(len(labels))
+    width = 0.35
+    plt.rcParams["figure.figsize"] = [20, 10]
+    plt.rcParams["font.size"] = 16
+
+    fig, ax = plt.subplots()
+    upg_rects = ax.bar(x_pos + width/2, upg, width, color=color, edgecolor="black", alpha=0.72)
+    bis_rects = ax.bar(x_pos - width/2, bis, width, color=color, edgecolor="black", linewidth=1.4)
+
+    ax.set_ylabel("Items")
+    ax.set_xticks(x_pos, labels, rotation='vertical')
+
+    fig.tight_layout()
+
     plt.savefig("loot.png")
 
 
