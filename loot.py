@@ -17,13 +17,14 @@ colors["WARRIOR"] = "#C69B6D"
 
 def parse():
     result = dict()
-    with open("loot.csv", newline='') as csvfile:
+    with open("loot.csv", newline='', encoding="latin1") as csvfile:
         spamreader = csv.reader(csvfile, quotechar='|')
         next(spamreader, None)
         for row in spamreader:
-            name = row[0][:-len("-Ashbringer")]
+            name = row[0][:-len("-Mograine")].replace('"', "")
             response = row[7]
             clas_s = row[9]
+            print(name)
             if name not in result:
                 result[name] = [clas_s, 0, 0]
 
@@ -51,7 +52,7 @@ def parse():
     upg_rects = ax.bar(x_pos + width/2, upg, width, color=color, edgecolor="black", alpha=0.72)
     bis_rects = ax.bar(x_pos - width/2, bis, width, color=color, edgecolor="black", linewidth=1.4)
 
-    ax.set_ylabel("Items")
+    ax.set_ylabel("Antal items (ej off spec)")
     ax.set_xticks(x_pos, labels, rotation='vertical')
 
     fig.tight_layout()
